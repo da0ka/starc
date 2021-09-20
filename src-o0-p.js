@@ -3,7 +3,7 @@
 ***************************************************
 implemented progress version.
 usage:
-	o0e_p(A,pb,bs,up,done,rate)
+	o0e_p(A,cb,bs,up,done,rate)
 	@A  :data for compression
 	@cb :counter bits(0-7)+8
 	@bs :block size. bs==0:1<<24, bs<16:1<<bs+9, bs<1024:bs<<10, or row value
