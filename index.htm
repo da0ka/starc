@@ -1,0 +1,28 @@
+<!doctype html><html><head>
+<meta charset=Shift_JIS>
+<meta name=viewport content="width=device-width, initial-scale=1"><title>Static Range Coder</title>
+<link rel=stylesheet href="0.css"></head><body>
+<form id=uform>
+	<label class=tofile id=kill>kill</label>
+	<label class=tofile><input type=file id=upfile>LOAD</label>
+	<b class=tofile><label for=opts>&#8801;</label></b>
+	<label><input type=checkbox id=fdec>Decode</label>
+	<ol id=flist></ol>
+</form>
+<input type=text value="ready.." readonly id=info>
+<div class=modal>
+	<input type=checkbox id=opts>
+	<div class="modalson m-up"><label for=opts>options</label>
+		<form id=oform>
+		order<select id=order><option>0<option>1<option>2</select>
+		counter bits<input value=4 size=1 title='0-7' id=cb>+8
+		block size<input value=9 size=9 title='1&lt;&lt;9+[1-15] B / [16-1023]KB / [1024-16777215]B' id=bs>
+		<input type=checkbox checked id=up>update
+		</form>
+	</div>
+</div>
+<script src="sub.js"></script>
+<script src="src-o0-p.js"></script>
+<script src="src-o1-p.js"></script>
+<script src="src-o2-p.js"></script>
+<script src="init.js"></script>
