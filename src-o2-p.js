@@ -3,7 +3,7 @@
 ***************************************************
 implemented progress version.
 usage:
-	o2e_p(A,pb,bs,up,done,rate)
+	o2e_p(A,cb,bs,up,done,rate)
 	@A  :data for compression
 	@cb :counter bits(0-7)+8
 	@bs :block size. bs==0:1<<24, bs<16:1<<bs+9, bs<1024:bs<<10, or row value
@@ -17,7 +17,7 @@ usage:
 	@rate: call back for progress
 ***************************************************/
 // compress
-function o2e_p(A,pb,bs,up,done,rate){
+function o2e_p(A,cb,bs,up,done,rate){
 	function pbits(i,s,c){
 		for(;i;)for(L+=(R>>>=1)*(s>>>--i&1);R<16777216;L=L<<8>>>0,R*=256)
 			if(255>L>>>24)
@@ -36,8 +36,8 @@ function o2e_p(A,pb,bs,up,done,rate){
 		// write symbol table
 		if(as<2){
 			pbits(2,0);
-			if(d<5)cbt(d-1,pb+4,5);
-			else l=l2b(d-=4)-1,cbt(l+4,pb+4,5),pbits(l,d);
+			if(d<5)cbt(d-1,cb+4,5);
+			else l=l2b(d-=4)-1,cbt(l+4,cb+4,5),pbits(l,d);
 			pbits(8,S[0])
 		}else{
 			l=l2b(--d);
@@ -71,7 +71,7 @@ function o2e_p(A,pb,bs,up,done,rate){
 		for(F[257]=++x,C[0]=c=0;c<x;)C[c+1]=C[c]+(D[c]=F[c++])
 	}
 	done=done||function(O){return O};rate=rate||function(){};
-	var sync="function"!=typeof rate,z=A.length,a=0,c=z<3?z:2,o=0,p=A[0]<<8|A[1],B=(pb&=7)|!!up<<4|c<<5,N=0,L=0,R=-1>>>0,fx=1<<(pb+=8),O=[],C=[],D=[],F=[],P=[],S=new Uint8Array(256);
+	var z=A.length,a=0,c=z<3?z:2,o=0,p=A[0]<<8|A[1],B=(cb&=7)|!!up<<4|c<<5,N=0,L=0,R=-1>>>0,fx=1<<(cb+=8),O=[],C=[],D=[],F=[],P=[],S=new Uint8Array(256);
 	O.b=pbits;O.c=cbt;bs&=-1>>>8;
 	bs=!bs?1<<24:bs<16?1<<bs+9:bs<1024?bs<<10:bs;
 	for(;a<z&&a<2;)pbits(8,A[a++]);
@@ -125,7 +125,7 @@ function o2d_p(A,done,rate){
 	function newModel(C,D,F,P,S){
 		var b=gbits(2),c,d,e,l,as=0;
 		// read symbol table
-		if(!b)c=cbt(5,pb+4),c>3&&(c=3+(gbits(c-=4)|1<<c)),F[gbits(8)]=1+c,as++;
+		if(!b)c=cbt(5,cb+4),c>3&&(c=3+(gbits(c-=4)|1<<c)),F[gbits(8)]=1+c,as++;
 		else{
 			if(!(l=gbits(4)))return 1;
 			if(b<2)
@@ -154,7 +154,7 @@ function o2d_p(A,done,rate){
 		for(C[0]=c=0;c<256;P[c++]=!b,b&&(e=c))C[c+1]=C[c]+(b=D[c]=F[c]);
 		F[c]=as;F[257]=e // alphabet size and last symbol+1
 	}
-	var sync="function"!=typeof rate,a=1,b,c=A[0],o=5,p=0,z=A.length,pb=8+(c&7),up=c>>4&1,L,R=-1>>>0,O=[],C=[],D=[],F=[],P=[],S=new Uint8Array(256);
+	var a=1,b,c=A[0],o=5,p=0,z=A.length,cb=8+(c&7),up=c>>4&1,L,R=-1>>>0,O=[],C=[],D=[],F=[],P=[],S=new Uint8Array(256);
 	done=done||function(O){return O};rate=rate||function(){};
 	O.b=gbits;O.c=cbt;
 	for(;--o;)L=(L<<8|A[a++])>>>0;
