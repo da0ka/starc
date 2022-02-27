@@ -6,7 +6,7 @@ a{color:#99f;text-decoration:none}
 a:hover,label:hover{color:#9ff}
 input,label,select{cursor:pointer;text-shadow:1px 1px #000}
 input[type=file]{display:none}
-#info{position:absolute;bottom:0;cursor:help;height:1em;z-index:999;width:100%}
+#info{position:absolute;bottom:0;cursor:help;height:1.25em;text-align:left;width:100%;z-index:999}
 #oform{padding:.5em;line-height:1.5em}
 #uform{width:100%;height:100%;background:#212;background:radial-gradient(circle at center center,#848,#212)}
 
@@ -58,3 +58,34 @@ ol li a:hover{color:#ffc}
 .modal input:checked~.m-up{top:52%;bottom:1.3em}
 .modal input:checked~.m-l2r{right:0}
 .modal input:checked~.m-r2l{left:45%}
+/* tooltip */
+.tooltip{
+	position:relative;
+	display:inline-block;
+	border-bottom:1px dotted #ccc;
+	color:#6fa
+}
+.tooltip .ttson{
+	visibility:hidden;
+	position:absolute;
+	white-space:nowrap;
+	background:rgba(144,112,144,.8);
+	color:snow;
+	padding:.5em;
+	border-radius:6px;
+	z-index:1;
+	opacity:0;
+	transition:opacity .25s
+}
+.tooltip:hover .ttson{visibility:visible;opacity:1}
+.tooltip-bottom{top:135%;left:50%;margin-left:-24px}
+.tooltip-bottom::after{
+	content:"";
+	position:absolute;
+	bottom:100%;
+	left:1em;
+	margin-left:-5px;
+	border-width:5px;
+	border-style:solid;
+	border-color:transparent transparent #a8a transparent
+}
